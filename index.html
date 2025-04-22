@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find Your Matching Country</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #f9a825, #f44336);
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+    form {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      max-width: 500px;
+      width: 100%;
+    }
+    input[type="email"], select, button {
+      padding: 10px;
+      width: 100%;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    .result {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .share {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Which Country Matches Your Personality?</h1>
+  <form id="quizForm">
+    <label>Email (use a valid one or you can't submit):</label>
+    <input type="email" id="email" name="email" required />
+
+    <label>1. What's your ideal weekend?</label>
+    <select name="q1" required>
+      <option value="1">Relaxing at home</option>
+      <option value="2">Exploring nature</option>
+      <option value="3">Partying with friends</option>
+    </select>
+
+    <label>2. Pick a food:</label>
+    <select name="q2" required>
+      <option value="1">Pizza</option>
+      <option value="2">Sushi</option>
+      <option value="3">Tacos</option>
+    </select>
+
+    <label>3. Favorite type of weather?</label>
+    <select name="q3" required>
+      <option value="1">Snowy</option>
+      <option value="2">Sunny</option>
+      <option value="3">Rainy</option>
+    </select>
+
+    <label>4. What motivates you?</label>
+    <select name="q4" required>
+      <option value="1">Success</option>
+      <option value="2">Peace</option>
+      <option value="3">Adventure</option>
+    </select>
+
+    <label>5. What kind of music do you prefer?</label>
+    <select name="q5" required>
+      <option value="1">Classical</option>
+      <option value="2">Pop</option>
+      <option value="3">Hip-hop</option>
+    </select>
+
+    <label>6. Which color do you like the most?</label>
+    <select name="q6" required>
+      <option value="1">Blue</option>
+      <option value="2">Red</option>
+      <option value="3">Green</option>
+    </select>
+
+    <label>7. Pick a movie genre:</label>
+    <select name="q7" required>
+      <option value="1">Drama</option>
+      <option value="2">Action</option>
+      <option value="3">Comedy</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div class="result" id="result" style="display:none;"></div>
+  <div class="share" id="shareMsg" style="display:none;">
+    <p>If you enjoyed the quiz, please share it with your friends!</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('quizForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      const data = new FormData(form);
+      let score = 0;
+
+      for (const [key, value] of data.entries()) {
+        if (key !== 'email') {
+          score += parseInt(value);
+        }
+      }
+
+      const countries = [
+        "Japan", "Brazil", "France", "South Africa", "Canada",
+        "India", "Mexico", "Italy", "Nigeria", "South Korea"
+      ];
+
+      const matchedCountry = countries[score % countries.length];
+
+      document.getElementById('result').textContent =
+        `You match with: ${matchedCountry}!`;
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('shareMsg').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
